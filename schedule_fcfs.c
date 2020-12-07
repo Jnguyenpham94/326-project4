@@ -10,7 +10,7 @@
 #include "cpu.h"
 #include "schedulers.h"
 
-Task taskList[10];
+Task taskList[8];
 int i = 0;
 
 //Your code and design here

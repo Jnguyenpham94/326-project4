@@ -28,8 +28,9 @@ void add(char *name, int priority, int burst)
 void schedule()
 {
     int length = sizeof(taskList) / sizeof(taskList[0]); //size of tasklist
-    Task tempTask; //temporary storage
+    Task tempTask; //temporary storage for Task struct
     int i, j;
+    //basically a modified insertion sort for priority
     for (i = 1; i < length; i++)
     {
         tempTask = taskList[i];
@@ -41,6 +42,7 @@ void schedule()
         }
         taskList[j+1] = tempTask;
     }
+    //prints out the output
     for (int l = 0; l < length; l++)
     {
         run(&taskList[l], taskList[l].burst);
