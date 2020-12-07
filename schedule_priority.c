@@ -10,7 +10,7 @@
 #include "cpu.h"
 #include "schedulers.h"
 
-Task taskList[10];
+Task taskList[8];
 int i = 0;
 
 /*
@@ -23,4 +23,26 @@ void add(char *name, int priority, int burst)
     taskList[i].priority = priority;
     taskList[i].burst = burst;
     i++;
+}
+
+void schedule()
+{
+    int length = sizeof(taskList) / sizeof(taskList[0]); //size of tasklist
+    Task tempTask; //temporary storage
+    int i, j;
+    for (i = 1; i < length; i++)
+    {
+        tempTask = taskList[i];
+        j = i-1;
+        while(j >= 0 && taskList[j].priority > tempTask.priority)
+        {
+            taskList[j+1] = taskList[j];
+            j = j-1;
+        }
+        taskList[j+1] = tempTask;
+    }
+    for (int l = 0; l < length; l++)
+    {
+        run(&taskList[l], taskList[l].burst);
+    }
 }
