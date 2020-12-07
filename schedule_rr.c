@@ -11,10 +11,11 @@
 #include "cpu.h"
 #include "schedulers.h"
 
-Task taskList[6];
-int length = sizeof(taskList) / sizeof(taskList[0]); //size of tasklist
+
+Task taskList[8]; // size will need to change for larger sizes.
+int length = sizeof(taskList)/sizeof(taskList[0]); //size of tasklist
 int i = 0;
-int count = 6;
+int count = 8;
 
 /*
  * Your code and design here:
@@ -37,13 +38,14 @@ void schedule()
             if (taskList[j].burst == 0)
             {
                 count--;
+                continue;
             }
             if (taskList[j].burst >= QUANTUM)
             {
                 run(&taskList[j], QUANTUM);
                 taskList[j].burst = taskList[j].burst - QUANTUM;
             }
-            if (taskList[j].burst < QUANTUM)
+            else if (taskList[j].burst < QUANTUM)
             {
                 run(&taskList[j], taskList[j].burst);
                 taskList[j].burst = 0;
